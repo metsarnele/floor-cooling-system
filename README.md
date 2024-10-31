@@ -7,6 +7,11 @@ Temperature Monitoring: Checks the temperature every hour.<br>
 Threshold-Based Control: Compares the current temperature to a set threshold and turns on the cooling if the temperature exceeds it.<br>
 Environment Configuration: Uses a `.env` file to set the temperature threshold for cooling activation.<br>
 
+## Explanation of Parameters
+`TEMP_THRESHOLD`: Sets the temperature threshold in Celsius. If the outside temperature rises above this value, the cooling system will activate. This value is read from the `.env` file.
+
+Example: `TEMP_THRESHOLD=25` will turn on cooling when the temperature exceeds 25°C.
+
 ## Usage
 
 ### Setup:
