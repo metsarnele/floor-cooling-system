@@ -90,6 +90,9 @@ CREATE TABLE `Users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+-- Add a `last_login` column to the `Users` table
+ALTER TABLE Users
+ADD COLUMN `last_login` DATETIME DEFAULT NULL;
 --
 -- Dumping data for table `Users`
 --
