@@ -72,6 +72,37 @@ LOCK TABLES `ActivityLog` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `temperaturelog`
+--
+
+DROP TABLE IF EXISTS `temperaturelog`;
+CREATE TABLE `temperaturelog` (
+  `temperature_log_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` INT(10) UNSIGNED NOT NULL, -- Foreign key to Users table
+  `activity_log_id` INT(10) UNSIGNED DEFAULT NULL, -- Optional link to ActivityLog
+  `temperature` DECIMAL(5, 2) NOT NULL, -- Temperature value (e.g., in Celsius)
+  `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP, -- When the temperature was logged
+  `location` VARCHAR(191) DEFAULT NULL, -- Optional location of the measurement
+  PRIMARY KEY (`temperature_log_id`),
+  KEY `user_id` (`user_id`),
+  KEY `activity_log_id` (`activity_log_id`),
+  CONSTRAINT `temperaturelog_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`),
+  CONSTRAINT `temperaturelog_ibfk_2` FOREIGN KEY (`activity_log_id`) REFERENCES `ActivityLog` (`activity_log_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `temperaturelog`
+--
+
+LOCK TABLES `temperaturelog` WRITE;
+/*!40000 ALTER TABLE `temperaturelog` DISABLE KEYS */;
+INSERT INTO temperaturelog (user_id, activity_log_id, temperature, location)
+VALUES (2, 53, 2.3, 'Viljandi');
+/*!40000 ALTER TABLE `temperaturelog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
 -- Table structure for table `Users`
 --
 
