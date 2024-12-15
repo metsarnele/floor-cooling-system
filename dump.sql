@@ -124,6 +124,21 @@ CREATE TABLE `Users` (
 -- Add a `last_login` column to the `Users` table
 ALTER TABLE Users
 ADD COLUMN `last_login` DATETIME DEFAULT NULL;
+
+-- Add unique indexes to ensure username and email are unique
+CREATE UNIQUE INDEX idx_username ON Users(username);
+CREATE UNIQUE INDEX idx_email ON Users(email);
+
+-- Add indexes for better performance on frequently queried columns
+CREATE INDEX idx_user_id_activitylog ON ActivityLog(user_id);
+CREATE INDEX idx_timestamp_activitylog ON ActivityLog(timestamp);
+
+-- Add a foreign key constraint to link activity_id in ActivityLog to Activities table
+ALTER TABLE ActivityLog
+ADD CONSTRAINT fk_activity_id FOREIGN KEY (activity_id) REFERENCES Activities(activity_id);
+
+-- Restore previous database settings
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 --
 -- Dumping data for table `Users`
 --
