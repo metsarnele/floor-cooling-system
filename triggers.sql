@@ -31,3 +31,27 @@ BEGIN
        SET MESSAGE_TEXT = 'Username cannot be empty.';
    END IF;
 END;
+
+-- Trigger for validating temperature range
+CREATE TRIGGER before_temperaturelog_insert
+BEFORE INSERT ON temperaturelog
+FOR EACH ROW
+BEGIN
+   IF NEW.temperature < -50 OR NEW.temperature > 50 THEN
+       SIGNAL SQLSTATE '45000'
+       SET MESSAGE_TEXT = 'Temperature out of acceptable range.';
+   END IF;
+END;
+
+-- Trigger for ensuring valid activity IDs
+CREATE TRIGGER before_activitylog_insert
+BEFORE INSERT ON ActivityLog
+FOR EACH ROW
+BEGIN
+   DECLARE activity_exists INT;
+   SELECT COUNT(*) INTO activity_exists FROM Activities WHERE activity_id = NEW.activity_id;
+   IF activity_exists = 0 THEN
+       SIGNAL SQLSTATE '45000'
+       SET MESSAGE_TEXT = 'Invalid activity ID.';
+   END IF;
+END;
